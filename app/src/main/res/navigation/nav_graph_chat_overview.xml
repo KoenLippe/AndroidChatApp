@@ -10,5 +10,16 @@
         android:name="com.example.androidchatapp.ui.fragment.ChatOverviewFragment"
         android:label="@string/label_chat_overview"
         tools:layout="@layout/fragment_chat_overview">
+        <action
+            android:id="@+id/action_ChatOverviewFragment_to_NewMessageFragment"
+            app:destination="@id/NewChatFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/NewChatFragment"
+        android:name="com.example.androidchatapp.ui.fragment.NewMessageFragment"
+        android:label="@string/label_new_chat_fragment"
+        tools:layout="@layout/fragment_new_message">
+
     </fragment>
 </navigation>

@@ -25,18 +25,6 @@ class LoginFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
-        // TODO: Check if this is the correct way
-        val uid = FirebaseAuth.getInstance().uid
-
-        if(uid !== null) {
-            Toast.makeText(context, "User Already logged in: ${uid}",
-                Toast.LENGTH_LONG).show()
-            (activity as LoginRegisterActivity).startChatOverviewActivity()
-
-            return null
-        }
-
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 

@@ -24,4 +24,5 @@
     <string name="register_error_fill_all_fields">Please fill in all fields.</string>
     <string name="register_error_pass_length">Passwords should be at least 6 chars long</string>
     <string name="register_error_password_not_equal">Passwords are not the same</string>
+    <string name="label_new_chat_fragment">NewChatFragment</string>
 </resources>

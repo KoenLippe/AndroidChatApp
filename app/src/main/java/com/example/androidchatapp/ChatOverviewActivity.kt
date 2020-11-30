@@ -4,6 +4,9 @@ import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.content_chat_overview.*
 
 class ChatOverviewActivity : AppCompatActivity() {
 
@@ -12,9 +15,9 @@ class ChatOverviewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat_overview)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "TODO: Open a new chat", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { _ ->
+            nav_host_fragment.findNavController()
+                .navigate(R.id.action_ChatOverviewFragment_to_NewMessageFragment)
         }
     }
 }

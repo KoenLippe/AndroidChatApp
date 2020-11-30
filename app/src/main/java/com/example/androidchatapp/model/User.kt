@@ -1,3 +1,6 @@
 package com.example.androidchatapp.model
 
-class User(val uid: String?, val username: String) {}
+data class User(val uid: String?, val username: String?) {
+    constructor(): this("", "") // Fix no arg constructor error
+}
+

@@ -5,14 +5,28 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginRegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // TODO: Check if this is the correct way
+        val uid = FirebaseAuth.getInstance().uid
+
+        if(uid !== null) {
+            Toast.makeText(this, "User Already logged in: $uid",
+                Toast.LENGTH_LONG).show()
+            startChatOverviewActivity()
+
+            return
+        }
+
         setContentView(R.layout.activity_login_register)
         setSupportActionBar(findViewById(R.id.toolbar))
     }
@@ -35,7 +49,6 @@ class LoginRegisterActivity : AppCompatActivity() {
 
     fun startChatOverviewActivity() {
         val intent = Intent(this, ChatOverviewActivity::class.java)
-//        intent.flags = Intent.Flag_ac
         startActivity(intent)
     }
 }
