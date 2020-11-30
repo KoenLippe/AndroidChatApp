@@ -1,5 +1,6 @@
 package com.example.androidchatapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -30,5 +31,11 @@ class LoginRegisterActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun startChatOverviewActivity() {
+        val intent = Intent(this, ChatOverviewActivity::class.java)
+//        intent.flags = Intent.Flag_ac
+        startActivity(intent)
     }
 }

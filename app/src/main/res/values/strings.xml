@@ -17,4 +17,8 @@
     <string name="action_login">Login</string>
     <string name="create_new_account">Create new account</string>
     <string name="hint_confirm_password">Confirm Password</string>
+    <string name="menu_sign_out">Sign Out</string>
+    <string name="menu_new_chat">New Chat</string>
+    <string name="title_activity_chat_overview">ChatOverviewActivity</string>
+    <string name="label_chat_overview">ChatOverview</string>
 </resources>

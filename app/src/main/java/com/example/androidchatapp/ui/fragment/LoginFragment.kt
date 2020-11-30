@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.androidchatapp.LoginRegisterActivity
 import com.example.androidchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -56,12 +57,14 @@ class LoginFragment: Fragment() {
                 Log.d(TAG, "Login successful ${task.result?.user?.uid}")
                 Toast.makeText(context, "Login successful ${task.result?.user?.uid}",
                     Toast.LENGTH_LONG).show()
+
+                (activity as LoginRegisterActivity).startChatOverviewActivity()
+
             }
             .addOnFailureListener {error ->
                 Log.d(TAG, "signIn:failure", error.cause)
                 Toast.makeText(context, "Login failed, reason: ${error.message}",
                     Toast.LENGTH_LONG).show()
             }
-
     }
 }
