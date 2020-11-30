@@ -21,4 +21,7 @@
     <string name="menu_new_chat">New Chat</string>
     <string name="title_activity_chat_overview">ChatOverviewActivity</string>
     <string name="label_chat_overview">ChatOverview</string>
+    <string name="register_error_fill_all_fields">Please fill in all fields.</string>
+    <string name="register_error_pass_length">Passwords should be at least 6 chars long</string>
+    <string name="register_error_password_not_equal">Passwords are not the same</string>
 </resources>

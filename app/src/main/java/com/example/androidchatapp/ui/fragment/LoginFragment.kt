@@ -46,8 +46,13 @@ class LoginFragment: Fragment() {
         Log.d(TAG, username)
         Log.d(TAG, password)
 
-        // TODO add validation
         // TODO add hashing?
+
+        if(username.isBlank() or password.isBlank()) {
+            Toast.makeText(context, "Please fill in all fields ",
+                Toast.LENGTH_LONG).show()
+            return
+        }
 
         val firebaseAuth = FirebaseAuth.getInstance()
         firebaseAuth.signInWithEmailAndPassword(username, password)
