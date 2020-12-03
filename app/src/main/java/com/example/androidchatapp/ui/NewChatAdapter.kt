@@ -24,6 +24,8 @@ class NewChatAdapter(
             }
         }
 
+        // TODO add tactile click animation when clicked
+
         fun dataBind(user: User) {
             itemView.txtName.text = user.username
         }

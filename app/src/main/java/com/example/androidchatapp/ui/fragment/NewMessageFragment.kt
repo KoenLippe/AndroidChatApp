@@ -47,6 +47,8 @@ class NewMessageFragment : Fragment() {
 
         initRv()
 
+        // TODO show spinner when loading
+
         usersViewModel.users.observe(viewLifecycleOwner, Observer {
             users.clear()
             it.forEach { user -> users.add(user!!) }
