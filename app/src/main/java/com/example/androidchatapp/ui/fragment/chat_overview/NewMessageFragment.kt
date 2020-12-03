@@ -1,4 +1,4 @@
-package com.example.androidchatapp.ui.fragment
+package com.example.androidchatapp.ui.fragment.chat_overview
 
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.androidchatapp.R
 import com.example.androidchatapp.model.User
-import com.example.androidchatapp.ui.NewChatAdapter
+import com.example.androidchatapp.ui.adapter.NewChatAdapter
 import com.example.androidchatapp.ui.vm.UsersViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager

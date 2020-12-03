@@ -1,4 +1,4 @@
-package com.example.androidchatapp.ui.fragment
+package com.example.androidchatapp.ui.fragment.chat_overview
 
 import android.os.Bundle
 import android.view.*
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidchatapp.R
 import com.example.androidchatapp.model.ChatListItem
-import com.example.androidchatapp.ui.ChatAdapter
+import com.example.androidchatapp.ui.adapter.RecentChatsAdapter
 import kotlinx.android.synthetic.main.fragment_chat_overview.*
 
 class ChatOverviewFragment : Fragment() {
@@ -17,7 +17,7 @@ class ChatOverviewFragment : Fragment() {
     }
 
     private val chats = arrayListOf<ChatListItem>()
-    private val chatAdapter = ChatAdapter(chats)
+    private val chatAdapter = RecentChatsAdapter(chats)
     //TODO Add viemodel
 
     override fun onCreateView(

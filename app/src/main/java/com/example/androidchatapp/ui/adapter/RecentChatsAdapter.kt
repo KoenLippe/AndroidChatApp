@@ -1,4 +1,4 @@
-package com.example.androidchatapp.ui
+package com.example.androidchatapp.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,9 +9,9 @@ import com.example.androidchatapp.R
 import com.example.androidchatapp.model.ChatListItem
 import kotlinx.android.synthetic.main.item_chat_list_item.view.*
 
-class ChatAdapter(
+class RecentChatsAdapter(
     private val chats: List<ChatListItem>
-): RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+): RecyclerView.Adapter<RecentChatsAdapter.ViewHolder>() {
 
     private lateinit var context: Context
 
@@ -23,7 +23,6 @@ class ChatAdapter(
             itemView.txtTimestamp.text = chat.timestamp
         }
     }
-
 
     override fun getItemCount(): Int {
         return chats.size

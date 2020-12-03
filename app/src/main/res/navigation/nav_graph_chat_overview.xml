@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/ChatOverviewFragment"
-        android:name="com.example.androidchatapp.ui.fragment.ChatOverviewFragment"
+        android:name="com.example.androidchatapp.ui.fragment.chat_overview.ChatOverviewFragment"
         android:label="@string/label_chat_overview"
         tools:layout="@layout/fragment_chat_overview">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/NewChatFragment"
-        android:name="com.example.androidchatapp.ui.fragment.NewMessageFragment"
+        android:name="com.example.androidchatapp.ui.fragment.chat_overview.NewMessageFragment"
         android:label="@string/label_new_chat_fragment"
         tools:layout="@layout/fragment_new_message">
 
