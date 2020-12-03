@@ -28,11 +28,6 @@ class ChatOverviewFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_chat_overview, container, false)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_chat_overview, menu) // TODO is not working yet.
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
