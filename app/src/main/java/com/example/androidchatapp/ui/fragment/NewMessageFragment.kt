@@ -1,14 +1,16 @@
 package com.example.androidchatapp.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.androidchatapp.R
 import com.example.androidchatapp.model.User
-import com.example.androidchatapp.ui.UsersAdapter
+import com.example.androidchatapp.ui.NewChatAdapter
 import com.example.androidchatapp.ui.vm.UsersViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,10 +19,14 @@ import kotlinx.android.synthetic.main.fragment_new_message.*
 
 class NewMessageFragment : Fragment() {
 
+    companion object {
+        private const val TAG = "NEW_MESSAGE_FRAGMENT"
+    }
+
     private val usersViewModel: UsersViewModel by viewModels()
 
     private val users = arrayListOf<User>()
-    private val usersAdapter = UsersAdapter(users)
+    private val usersAdapter = NewChatAdapter(users, ::onNewChatClick)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,5 +60,12 @@ class NewMessageFragment : Fragment() {
             adapter = usersAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL , false)
         }
+    }
+
+    private fun onNewChatClick(user: User) {
+        Log.i(TAG, "Starting new chat with user: ${user.username}")
+        Toast.makeText(context, "TODO: Launch chat activity",
+            Toast.LENGTH_LONG).show()
+        // TODO Start Chat Activity
     }
 }

@@ -40,19 +40,8 @@
                 android:text="TextView"
                 />
 
-            <TextView
-                android:id="@+id/txtLatestMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/txtTimestamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
 
     </LinearLayout>
 

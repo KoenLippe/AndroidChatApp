@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.item_chat_list_item.view.*
 
 class ChatAdapter(
     private val chats: List<ChatListItem>
-//    private val onChat:(ColorItem) -> Unit
 ): RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
     private lateinit var context: Context

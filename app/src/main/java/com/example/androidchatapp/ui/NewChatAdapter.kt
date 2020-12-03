@@ -9,17 +9,23 @@ import com.example.androidchatapp.R
 import com.example.androidchatapp.model.User
 import kotlinx.android.synthetic.main.item_chat_list_item.view.*
 
-class UsersAdapter(
-    private val users: List<User>
-): RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
+class NewChatAdapter(
+    private val users: List<User>,
+    private val onNewChatClick:(User) -> Unit
+): RecyclerView.Adapter<NewChatAdapter.ViewHolder>() {
 
     private lateinit var context: Context
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        init {
+            itemView.setOnClickListener {
+                onNewChatClick(users[adapterPosition])
+            }
+        }
+
         fun dataBind(user: User) {
-            itemView.txtName.text = user.uid
-            itemView.txtLatestMessage.text = user.username
+            itemView.txtName.text = user.username
         }
     }
 
@@ -29,8 +35,7 @@ class UsersAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
-        // TODO Replace with own styling
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_chat_list_item, parent, false))
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_new_chat_list_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

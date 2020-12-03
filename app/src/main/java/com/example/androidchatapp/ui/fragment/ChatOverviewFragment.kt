@@ -1,25 +1,15 @@
 package com.example.androidchatapp.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidchatapp.R
 import com.example.androidchatapp.model.ChatListItem
-import com.example.androidchatapp.model.User
 import com.example.androidchatapp.ui.ChatAdapter
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_chat_overview.*
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class ChatOverviewFragment : Fragment() {
 
     companion object {
@@ -46,6 +36,7 @@ class ChatOverviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        chats.clear()
         for (x in 0..5) {
             chats.add(ChatListItem("Tom Vuyst", "asdf", "Yooooo!", "09:45"))
         }
