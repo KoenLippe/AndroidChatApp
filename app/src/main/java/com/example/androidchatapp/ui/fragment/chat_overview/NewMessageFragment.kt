@@ -1,5 +1,6 @@
 package com.example.androidchatapp.ui.fragment.chat_overview
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.example.androidchatapp.ui.vm.UsersViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidchatapp.ChatActivity
 import kotlinx.android.synthetic.main.fragment_new_message.*
 
 class NewMessageFragment : Fragment() {
@@ -66,8 +68,7 @@ class NewMessageFragment : Fragment() {
 
     private fun onNewChatClick(user: User) {
         Log.i(TAG, "Starting new chat with user: ${user.username}")
-        Toast.makeText(context, "TODO: Launch chat activity",
-            Toast.LENGTH_LONG).show()
-        // TODO Start Chat Activity
+        val chatIntent = Intent(context, ChatActivity::class.java)
+        startActivity(chatIntent)
     }
 }
