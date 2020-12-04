@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.example.androidchatapp.R
 import com.example.androidchatapp.model.User
@@ -17,12 +18,19 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidchatapp.ChatActivity
+import com.example.androidchatapp.model.ChatMessage
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_new_message.*
 
 class NewMessageFragment : Fragment() {
 
     companion object {
-        private const val TAG = "NEW_MESSAGE_FRAGMENT"
+         private const val TAG = "NEW_MESSAGE_FRAGMENT"
+         const val KEY_USER = "NEW_MESSAGE_USER"
     }
 
     private val usersViewModel: UsersViewModel by viewModels()
@@ -49,7 +57,7 @@ class NewMessageFragment : Fragment() {
 
         initRv()
 
-        // TODO show spinner when loading
+        // TODO show spinner when loading -> firebase is really slow sometimes
 
         usersViewModel.users.observe(viewLifecycleOwner, Observer {
             users.clear()
@@ -69,6 +77,7 @@ class NewMessageFragment : Fragment() {
     private fun onNewChatClick(user: User) {
         Log.i(TAG, "Starting new chat with user: ${user.username}")
         val chatIntent = Intent(context, ChatActivity::class.java)
+        chatIntent.putExtra(KEY_USER, user)
         startActivity(chatIntent)
     }
 }

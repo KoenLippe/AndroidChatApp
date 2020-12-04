@@ -4,13 +4,19 @@ import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import com.example.androidchatapp.model.User
+import com.example.androidchatapp.ui.fragment.chat_overview.NewMessageFragment
 
 class ChatActivity : AppCompatActivity() {
+
+    lateinit var chatPartner: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        chatPartner = intent.getParcelableExtra<User>(NewMessageFragment.KEY_USER)!!
+        supportActionBar?.title = chatPartner?.username
     }
 }

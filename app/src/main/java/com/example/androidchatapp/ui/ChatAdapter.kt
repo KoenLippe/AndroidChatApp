@@ -8,6 +8,7 @@ import com.example.androidchatapp.R
 import com.example.androidchatapp.databinding.ItemChatReceivedBinding
 import com.example.androidchatapp.databinding.ItemChatSentBinding
 import com.example.androidchatapp.model.ChatMessage
+import com.google.firebase.auth.FirebaseAuth
 
 const val VIEW_TYPE_MESSAGE_SENT = 1
 const val VIEW_TYPE_MESSAGE_RECEIVED = 2
@@ -21,7 +22,6 @@ class ChatAdapter (
         private val binding = ItemChatSentBinding.bind(itemView)
 
         fun dataBind(message: ChatMessage) {
-            binding.txtUser.text = message.sender
             binding.txtContent.text = message.content
         }
     }
@@ -31,7 +31,6 @@ class ChatAdapter (
         private val binding = ItemChatReceivedBinding.bind(itemView)
 
         fun dataBind(message: ChatMessage) {
-            binding.txtUser.text = message.sender
             binding.txtContent.text = message.content
         }
     }
@@ -44,10 +43,11 @@ class ChatAdapter (
     override fun getItemViewType(position: Int): Int {
         val message = chatMessages[position]
 
-        return if(message.sender == "1") {
-            VIEW_TYPE_MESSAGE_SENT
-        } else {
+        return if(message.toId == FirebaseAuth.getInstance().currentUser?.uid) {
             VIEW_TYPE_MESSAGE_RECEIVED
+        } else {
+            VIEW_TYPE_MESSAGE_SENT
+
         }
     }
 
