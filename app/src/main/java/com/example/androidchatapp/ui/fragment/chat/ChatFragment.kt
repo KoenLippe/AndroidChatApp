@@ -39,9 +39,9 @@ class ChatFragment : Fragment() {
 
         for (x in 0..5) {
             if(x % 2 == 0) {
-                chatMessages.add(ChatMessage("test", "1", "0101"))
+                chatMessages.add(ChatMessage("Sent", "1", "0101"))
             } else {
-                chatMessages.add(ChatMessage("test", "2", "0101"))
+                chatMessages.add(ChatMessage("Received", "2", "0101"))
             }
         }
 
