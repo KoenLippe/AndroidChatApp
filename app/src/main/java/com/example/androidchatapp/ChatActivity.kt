@@ -1,8 +1,6 @@
 package com.example.androidchatapp
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidchatapp.model.User
 import com.example.androidchatapp.ui.fragment.chat_overview.NewMessageFragment
