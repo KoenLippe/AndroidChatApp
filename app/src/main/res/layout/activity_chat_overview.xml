@@ -11,11 +11,12 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.AndroidChatApp.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbarChatOverview"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:title="@string/toolbar_title"
             app:popupTheme="@style/Theme.AndroidChatApp.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>

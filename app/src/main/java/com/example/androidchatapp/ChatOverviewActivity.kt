@@ -7,6 +7,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.androidchatapp.ui.dialog.LogoutDialog
+import kotlinx.android.synthetic.main.activity_chat_overview.*
 import kotlinx.android.synthetic.main.content_chat_overview.*
 
 class ChatOverviewActivity : AppCompatActivity() {
@@ -20,6 +21,8 @@ class ChatOverviewActivity : AppCompatActivity() {
             nav_host_fragment.findNavController()
                 .navigate(R.id.action_ChatOverviewFragment_to_NewMessageFragment)
         }
+
+        fabToggler()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -36,5 +39,15 @@ class ChatOverviewActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun fabToggler() {
+        nav_host_fragment.findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id in arrayOf(R.id.NewChatFragment)) {
+                fab.hide()
+            } else {
+                fab.show()
+            }
+        }
     }
 }
