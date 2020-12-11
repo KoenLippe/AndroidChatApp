@@ -17,11 +17,7 @@ import com.example.androidchatapp.model.ChatMessage
 import com.example.androidchatapp.model.User
 import com.example.androidchatapp.ui.ChatAdapter
 import com.example.androidchatapp.ui.vm.ChatViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_chat.*
 
 /**
@@ -54,14 +50,24 @@ class ChatFragment : Fragment() {
 
         chatPartner = (activity as ChatActivity).chatPartner
 
-        listenForMessages()
+        initRv()
 
         btnSend.setOnClickListener {
             val message: String = txtChatInput.editText?.text.toString()
             chatViewModel.sendMessage(chatPartner, message)
         }
 
-        initRv()
+        chatViewModel.messages.observe(viewLifecycleOwner, Observer {
+            chatMessages.clear()
+            chatMessages.addAll(it)
+            chatMessagesAdapter.notifyDataSetChanged()
+
+            // Scroll to bottom
+            rvChatLog.scrollToPosition(chatMessagesAdapter.itemCount - 1)
+            Log.i(TAG, "Chat messages added")
+        })
+
+        chatViewModel.listenForMessages(chatPartner)
     }
 
     private fun initRv() {
@@ -73,57 +79,4 @@ class ChatFragment : Fragment() {
             layoutManager = manager
         }
     }
-
-
-    private fun listenForMessages() {
-        // TODO: Put into view model
-        Log.i(TAG, "Listening for messages")
-
-        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-        val chatPartner = (activity as ChatActivity).chatPartner
-        val ref = FirebaseDatabase.getInstance()
-            .getReference("/user-messages/${currentUserId}/${chatPartner.uid}")
-
-        ref.addChildEventListener(object: ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val chatMessage = snapshot.getValue(ChatMessage::class.java)
-
-                if(chatMessage != null) {
-                    Log.i(TAG, chatMessage.content)
-                    if(chatMessage.fromId == currentUserId || chatMessage.toId == currentUserId) {
-                        chatMessages.add(chatMessage)
-                        chatMessagesAdapter.notifyDataSetChanged()
-                        rvChatLog.scrollToPosition(chatMessagesAdapter.itemCount - 1)
-                    }
-                }
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                // No action required
-                return
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                val chatMessage = snapshot.getValue(ChatMessage::class.java)
-
-                if(chatMessage != null) {
-                    chatMessages.remove(chatMessage)
-                    chatMessagesAdapter.notifyDataSetChanged()
-                }
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                // No action required
-                return
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // No action required
-                return
-            }
-
-        })
-    }
-
-
 }
