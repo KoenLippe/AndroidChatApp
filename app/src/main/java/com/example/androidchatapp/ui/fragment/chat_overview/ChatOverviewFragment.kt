@@ -3,6 +3,7 @@ package com.example.androidchatapp.ui.fragment.chat_overview
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +14,8 @@ import com.example.androidchatapp.ui.adapter.LatestChatsAdapter
 import com.example.androidchatapp.ui.vm.LatestMessagesViewModel
 import kotlinx.android.synthetic.main.fragment_chat_overview.*
 import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.fragment_new_message.*
+import com.example.androidchatapp.ChatOverviewActivity
+import com.example.androidchatapp.model.User
 
 class ChatOverviewFragment : Fragment() {
 
@@ -26,7 +28,7 @@ class ChatOverviewFragment : Fragment() {
     private val latestMessagesViewModel: LatestMessagesViewModel by viewModels()
 
     private val latestChats = arrayListOf<ChatMessage>()
-    private val latestChatAdapter = LatestChatsAdapter(latestChats)
+    private val latestChatAdapter = LatestChatsAdapter(latestChats, ::onChatClick)
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -63,6 +65,11 @@ class ChatOverviewFragment : Fragment() {
         })
 
         latestMessagesViewModel.getLatestMessages()
+    }
+
+    private fun onChatClick(user: User) {
+        //Start chat activity
+        (activity as ChatOverviewActivity).startChatActivity(user)
     }
 
     private fun initRv() {

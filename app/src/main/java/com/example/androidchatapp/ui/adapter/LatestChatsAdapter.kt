@@ -21,12 +21,19 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class LatestChatsAdapter(
-    private val chats: List<ChatMessage>
+    private val chats: List<ChatMessage>,
+    private val onChatClick: (User) -> Unit
 ): RecyclerView.Adapter<LatestChatsAdapter.ViewHolder>() {
 
     private lateinit var context: Context
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        lateinit var user: User
+
+        init {
+            itemView.setOnClickListener { onChatClick(user) }
+        }
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun dataBind(chat: ChatMessage) {
@@ -37,8 +44,8 @@ class LatestChatsAdapter(
             val ref = FirebaseDatabase.getInstance().getReference("/users/${chat.fromId}")
             ref.addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue(User::class.java)
-                    itemView.txtName.text = user?.username
+                    user = snapshot.getValue(User::class.java)!!
+                    itemView.txtName.text = user.username
                 }
 
                 override fun onCancelled(error: DatabaseError) {

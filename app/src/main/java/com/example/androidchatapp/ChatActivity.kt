@@ -14,7 +14,7 @@ class ChatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        chatPartner = intent.getParcelableExtra<User>(NewMessageFragment.KEY_USER)!!
+        chatPartner = intent.getParcelableExtra<User>(ChatOverviewActivity.KEY_USER)!!
         supportActionBar?.title = chatPartner.username
     }
 }

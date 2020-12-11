@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidchatapp.ChatActivity
+import com.example.androidchatapp.ChatOverviewActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_new_message.*
 
@@ -23,7 +24,6 @@ class NewMessageFragment : Fragment() {
 
     companion object {
          private const val TAG = "NEW_MESSAGE_FRAGMENT"
-         const val KEY_USER = "NEW_MESSAGE_USER"
     }
 
     private val usersViewModel: UsersViewModel by viewModels()
@@ -72,9 +72,6 @@ class NewMessageFragment : Fragment() {
     }
 
     private fun onNewChatClick(user: User) {
-        Log.i(TAG, "Starting new chat with user: ${user.username}")
-        val chatIntent = Intent(context, ChatActivity::class.java)
-        chatIntent.putExtra(KEY_USER, user)
-        startActivity(chatIntent)
+        (activity as ChatOverviewActivity).startChatActivity(user)
     }
 }
