@@ -46,16 +46,14 @@ class RegisterFragment: Fragment() {
         val password = txtPasswordRegister.editText?.text.toString()
         val passwordConfirm = txtPasswordConfirm.editText?.text.toString()
         Log.d(TAG, username)
-        Log.d(TAG, password)
 
         if(username.isBlank() or password.isBlank() or passwordConfirm.isBlank()) {
             Toast.makeText(context, getString(R.string.register_error_fill_all_fields),
                 Toast.LENGTH_LONG).show()
             return
-        } else if(password.length >= MINIMUM_PASSWORD_LENGTH ||
-            passwordConfirm.length >= MINIMUM_PASSWORD_LENGTH
+        } else if(password.length <= MINIMUM_PASSWORD_LENGTH ||
+            passwordConfirm.length <= MINIMUM_PASSWORD_LENGTH
         ) {
-                // TODO Test with this
                 Toast.makeText(context, getString(R.string.register_error_pass_length),
                     Toast.LENGTH_LONG).show()
                 return
