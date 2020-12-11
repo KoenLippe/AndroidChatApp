@@ -9,6 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidchatapp.R
 import com.example.androidchatapp.model.ChatListItem
 import com.example.androidchatapp.model.ChatMessage
+import com.example.androidchatapp.model.User
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.item_chat_list_item.view.*
 
 class RecentChatsAdapter(
@@ -20,12 +25,23 @@ class RecentChatsAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun dataBind(chat: ChatMessage) {
-            Log.d("ADAPTER", chat.toString())
-            itemView.txtName.text = chat.fromId
             itemView.txtLatestMessage.text = chat.content
-            itemView.txtTimestamp.text = chat.timestamp.toString()
+//            itemView.txtTimestamp.text = chat.timestamp.toString()
+            // TODO Parse timestamp
 
-            //TODO call database with chatpartner UserID do get user info
+            // Get user info
+            val ref = FirebaseDatabase.getInstance().getReference("/users/${chat.fromId}")
+            ref.addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.getValue(User::class.java)
+                    itemView.txtName.text = user?.username
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // No action required
+                    return
+                }
+            })
         }
     }
 
@@ -41,6 +57,4 @@ class RecentChatsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.dataBind(chats[position])
     }
-
-
 }

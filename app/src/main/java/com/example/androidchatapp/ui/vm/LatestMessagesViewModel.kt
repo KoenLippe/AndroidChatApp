@@ -11,7 +11,6 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.fragment_chat_overview.*
 
 class LatestMessagesViewModel(application: Application): AndroidViewModel(application) {
 
@@ -20,9 +19,10 @@ class LatestMessagesViewModel(application: Application): AndroidViewModel(applic
     }
 
     // List to be able to add single messages to
-    private val latestMessagesList = arrayListOf<ChatMessage>()
+    private val latestMessagesMap = hashMapOf<String, ChatMessage>()
     // Update MutableLiveData with list from above
-    private val _latestMessages: MutableLiveData<List<ChatMessage>> = MutableLiveData(latestMessagesList)
+    private val _latestMessages: MutableLiveData<List<ChatMessage>> =
+        MutableLiveData()
 
     val latestMessages: LiveData<List<ChatMessage>> get() = _latestMessages
 
@@ -34,15 +34,21 @@ class LatestMessagesViewModel(application: Application): AndroidViewModel(applic
         latestMessageRef.addChildEventListener(object: ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val chatMessage = snapshot.getValue(ChatMessage::class.java)
+                Log.d(TAG, "Message: " + chatMessage.toString())
 
                 if(chatMessage != null) {
-                    latestMessagesList.add(chatMessage)
-                    _latestMessages.value = latestMessagesList
+                    latestMessagesMap[snapshot.key!!] = chatMessage
+                    _latestMessages.value = latestMessagesMap.values.toList()
                 }
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                // No action required - needs to be implemented
+                val chatMessage = snapshot.getValue(ChatMessage::class.java)
+
+                if(chatMessage != null) {
+                    latestMessagesMap[snapshot.key!!] = chatMessage
+                    _latestMessages.value = latestMessagesMap.values.toList()
+                }
                 return
             }
 
@@ -50,8 +56,8 @@ class LatestMessagesViewModel(application: Application): AndroidViewModel(applic
                 val chatMessage = snapshot.getValue(ChatMessage::class.java)
 
                 if(chatMessage != null) {
-                    latestMessagesList.remove(chatMessage)
-                    _latestMessages.value = latestMessagesList
+                    latestMessagesMap[snapshot.key!!] = chatMessage
+                    _latestMessages.value = latestMessagesMap.values.toList()
                 }
             }
 

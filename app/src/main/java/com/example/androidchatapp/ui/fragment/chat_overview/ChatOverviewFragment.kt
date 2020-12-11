@@ -52,7 +52,7 @@ class ChatOverviewFragment : Fragment() {
 
 
         // Prevent list doubling
-        if(chats.size == 0) latestMessagesViewModel.getLatestMessages()
+        latestMessagesViewModel.getLatestMessages()
 
         // Todo add swipe down to refresh
     }
