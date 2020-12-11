@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 class ChatViewModel(application: Application): AndroidViewModel(application) {
 
     companion object {
-        private const val TAG = "CHAT_VIEW_MODEL"
+        private const val TAG = "VM_CHAT"
     }
 
     // List to be able to add single messages to
