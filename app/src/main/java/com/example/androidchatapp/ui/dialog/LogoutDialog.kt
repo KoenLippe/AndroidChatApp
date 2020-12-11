@@ -21,7 +21,6 @@ class LogoutDialog {
                 .setPositiveButton(context.getString(R.string.help_yes)) { _, _ ->
                     FirebaseAuth.getInstance().signOut()
 
-                    // TODO find out how to do cleanup for this
                     val loginIntent = Intent(context, LoginRegisterActivity::class.java)
                     startActivity(context, loginIntent, Bundle())
                 }

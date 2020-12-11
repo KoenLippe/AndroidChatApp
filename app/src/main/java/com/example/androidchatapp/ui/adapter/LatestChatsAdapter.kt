@@ -1,13 +1,11 @@
 package com.example.androidchatapp.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidchatapp.R
-import com.example.androidchatapp.model.ChatListItem
 import com.example.androidchatapp.model.ChatMessage
 import com.example.androidchatapp.model.User
 import com.google.firebase.database.DataSnapshot
@@ -16,9 +14,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.item_chat_list_item.view.*
 
-class RecentChatsAdapter(
+class LatestChatsAdapter(
     private val chats: List<ChatMessage>
-): RecyclerView.Adapter<RecentChatsAdapter.ViewHolder>() {
+): RecyclerView.Adapter<LatestChatsAdapter.ViewHolder>() {
 
     private lateinit var context: Context
 

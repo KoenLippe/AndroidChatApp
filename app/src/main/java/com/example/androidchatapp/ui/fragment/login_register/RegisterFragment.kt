@@ -54,9 +54,9 @@ class RegisterFragment: Fragment() {
         } else if(password.length <= MINIMUM_PASSWORD_LENGTH ||
             passwordConfirm.length <= MINIMUM_PASSWORD_LENGTH
         ) {
-                Toast.makeText(context, getString(R.string.register_error_pass_length),
-                    Toast.LENGTH_LONG).show()
-                return
+            Toast.makeText(context, getString(R.string.register_error_pass_length),
+                Toast.LENGTH_LONG).show()
+            return
         }
         if (password != passwordConfirm) {
             Toast.makeText(context, getString(R.string.register_error_password_not_equal),

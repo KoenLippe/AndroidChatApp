@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidchatapp.R
 import com.example.androidchatapp.model.ChatMessage
-import com.example.androidchatapp.ui.adapter.RecentChatsAdapter
+import com.example.androidchatapp.ui.adapter.LatestChatsAdapter
 import com.example.androidchatapp.ui.vm.LatestMessagesViewModel
 import kotlinx.android.synthetic.main.fragment_chat_overview.*
 import androidx.lifecycle.Observer
@@ -22,9 +22,8 @@ class ChatOverviewFragment : Fragment() {
 
     private val latestMessagesViewModel: LatestMessagesViewModel by viewModels()
 
-    private val chats = arrayListOf<ChatMessage>()
-    private val chatAdapter = RecentChatsAdapter(chats)
-    //TODO Rename these variables
+    private val latestChats = arrayListOf<ChatMessage>()
+    private val latestChatAdapter = LatestChatsAdapter(latestChats)
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -39,14 +38,13 @@ class ChatOverviewFragment : Fragment() {
 
         initRv()
 
-
         latestMessagesViewModel.latestMessages.observe(viewLifecycleOwner, Observer {
-            chats.clear()
-            chats.addAll(it)
-            chatAdapter.notifyDataSetChanged()
+            latestChats.clear()
+            latestChats.addAll(it)
+            latestChatAdapter.notifyDataSetChanged()
 
             // Scroll to bottom
-            rvChats.scrollToPosition(chatAdapter.itemCount - 1)
+            rvChats.scrollToPosition(latestChatAdapter.itemCount - 1)
             Log.i(TAG, "Latest messages updated")
         })
 
@@ -59,7 +57,7 @@ class ChatOverviewFragment : Fragment() {
 
     private fun initRv() {
         rvChats.apply {
-            adapter = chatAdapter
+            adapter = latestChatAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL , false)
         }
     }
