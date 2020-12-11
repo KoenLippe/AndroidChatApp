@@ -8,12 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidchatapp.ChatActivity
 import com.example.androidchatapp.R
 import com.example.androidchatapp.model.ChatMessage
+import com.example.androidchatapp.model.User
 import com.example.androidchatapp.ui.ChatAdapter
+import com.example.androidchatapp.ui.vm.ChatViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -30,8 +33,12 @@ class ChatFragment : Fragment() {
         private const val TAG = "CHAT_FRAGMENT"
     }
 
+    private val chatViewModel: ChatViewModel by viewModels()
+
     private val chatMessages = arrayListOf<ChatMessage>()
     private val chatMessagesAdapter = ChatAdapter(chatMessages)
+
+    private lateinit var chatPartner: User;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,9 +51,15 @@ class ChatFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
+        chatPartner = (activity as ChatActivity).chatPartner
+
         listenForMessages()
-        btnSend.setOnClickListener { sendMessage() }
+
+        btnSend.setOnClickListener {
+            val message: String = txtChatInput.editText?.text.toString()
+            chatViewModel.sendMessage(chatPartner, message)
+        }
 
         initRv()
     }
@@ -64,17 +77,15 @@ class ChatFragment : Fragment() {
 
     private fun listenForMessages() {
         // TODO: Put into view model
+        Log.i(TAG, "Listening for messages")
+
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
         val chatPartner = (activity as ChatActivity).chatPartner
+        val ref = FirebaseDatabase.getInstance()
+            .getReference("/user-messages/${currentUserId}/${chatPartner.uid}")
 
-        Log.i(TAG, currentUserId.toString())
-        Log.i(TAG, chatPartner.uid.toString())
-        Log.i(TAG, "listening for messages")
-
-        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/${currentUserId}/${chatPartner.uid}")
         ref.addChildEventListener(object: ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                Log.i(TAG, "new child added")
                 val chatMessage = snapshot.getValue(ChatMessage::class.java)
 
                 if(chatMessage != null) {
@@ -88,58 +99,31 @@ class ChatFragment : Fragment() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
+                // No action required
+                return
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
-                TODO("Not yet implemented")
+                val chatMessage = snapshot.getValue(ChatMessage::class.java)
+
+                if(chatMessage != null) {
+                    chatMessages.remove(chatMessage)
+                    chatMessagesAdapter.notifyDataSetChanged()
+                }
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
+                // No action required
+                return
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                // No action required
+                return
             }
 
         })
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun sendMessage() {
-        Log.i(TAG, "on send")
-        // TODO extract logic to viewModel
-
-        val chatPartner = (activity as ChatActivity).chatPartner
-
-        val message = txtChatInput.editText?.text.toString()
-        val fromId = FirebaseAuth.getInstance().currentUser?.uid
-        val ownRef = FirebaseDatabase.getInstance().getReference("/user-messages/${fromId}/${chatPartner.uid}").push()
-        val toRef = FirebaseDatabase.getInstance().getReference("/user-messages/${chatPartner.uid}/${fromId}").push()
-        val ownLatestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/${fromId}/${chatPartner.uid}")
-        val toLatestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/${chatPartner.uid}/${fromId}")
-
-        val chatMessage = ChatMessage(
-            ownRef.key!!,
-            message,
-            fromId!!,
-            (activity as ChatActivity).chatPartner.uid!!,
-            System.currentTimeMillis()/1000)
-
-        ownRef.setValue(chatMessage).addOnCompleteListener {
-            Log.i(TAG, "Saved chat message")
-        }.addOnFailureListener {
-            TODO("TODO IMPLEMENT")
-        }
-
-        toRef.setValue(chatMessage)
-        ownLatestMessageRef.setValue(chatMessage)
-        toLatestMessageRef.setValue(chatMessage)
-
-
-    }
-
 
 
 }

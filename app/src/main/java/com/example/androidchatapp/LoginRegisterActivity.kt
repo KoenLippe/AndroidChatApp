@@ -16,12 +16,9 @@ class LoginRegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Check if this is the correct way
         val uid = FirebaseAuth.getInstance().uid
 
         if(uid !== null) {
-            Toast.makeText(this, "User Already logged in: $uid",
-                Toast.LENGTH_LONG).show()
             startChatOverviewActivity()
 
             return
