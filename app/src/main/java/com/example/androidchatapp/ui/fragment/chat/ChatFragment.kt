@@ -53,8 +53,9 @@ class ChatFragment : Fragment() {
         initRv()
 
         btnSend.setOnClickListener {
-            val message: String = txtChatInput.editText?.text.toString()
-            chatViewModel.sendMessage(chatPartner, message)
+            val message = txtChatInput.editText?.text
+            chatViewModel.sendMessage(chatPartner, message.toString())
+            message?.clear()
         }
 
         chatViewModel.messages.observe(viewLifecycleOwner, Observer {

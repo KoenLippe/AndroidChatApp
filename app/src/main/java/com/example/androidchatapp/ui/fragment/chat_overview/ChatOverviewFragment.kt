@@ -13,12 +13,15 @@ import com.example.androidchatapp.ui.adapter.LatestChatsAdapter
 import com.example.androidchatapp.ui.vm.LatestMessagesViewModel
 import kotlinx.android.synthetic.main.fragment_chat_overview.*
 import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.fragment_new_message.*
 
 class ChatOverviewFragment : Fragment() {
 
     companion object {
         const val TAG = "ChatOverviewFragment"
     }
+
+    // TODO add text when recycler view is empty
 
     private val latestMessagesViewModel: LatestMessagesViewModel by viewModels()
 
@@ -38,21 +41,28 @@ class ChatOverviewFragment : Fragment() {
 
         initRv()
 
-        latestMessagesViewModel.latestMessages.observe(viewLifecycleOwner, Observer {
+        latestMessagesViewModel.fetching.observe(viewLifecycleOwner, Observer {
+            Log.i(TAG, it.toString())
+            if(it) {
+                pbLatestMessages.visibility = View.VISIBLE
+            } else {
+                pbLatestMessages.visibility = View.INVISIBLE
+            }
+        })
+
+        latestMessagesViewModel.latestMessages.observe(viewLifecycleOwner, Observer { it ->
             latestChats.clear()
             latestChats.addAll(it)
+            latestChats.sortBy { it.timestamp }
+            latestChats.reverse()
             latestChatAdapter.notifyDataSetChanged()
 
-            // Scroll to bottom
-            rvChats.scrollToPosition(latestChatAdapter.itemCount - 1)
+            // Scroll to top
+            rvChats.scrollToPosition(0)
             Log.i(TAG, "Latest messages updated")
         })
 
-
-        // Prevent list doubling
         latestMessagesViewModel.getLatestMessages()
-
-        // Todo add swipe down to refresh
     }
 
     private fun initRv() {

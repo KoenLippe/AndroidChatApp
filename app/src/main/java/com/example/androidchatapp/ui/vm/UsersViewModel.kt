@@ -19,12 +19,15 @@ class UsersViewModel(application: Application): AndroidViewModel(application) {
 
     //TODO: Add repository?
     private val _users: MutableLiveData<List<User?>> = MutableLiveData()
+    private val _fetching: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val users: LiveData<List<User?>> get() = _users
+    val fetching: LiveData<Boolean> get() = _fetching
     //TODO add spinner when loading
 
     fun getUsers() {
         // Fetching users from database
+        _fetching.value = true
         val ref = FirebaseDatabase.getInstance().getReference("/users")
 
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
@@ -34,6 +37,7 @@ class UsersViewModel(application: Application): AndroidViewModel(application) {
                 }
 
                 _users.value = convertedUsers
+                _fetching.value = false
             }
 
             override fun onCancelled(error: DatabaseError) {

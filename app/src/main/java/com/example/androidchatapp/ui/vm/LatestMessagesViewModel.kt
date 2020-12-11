@@ -23,10 +23,14 @@ class LatestMessagesViewModel(application: Application): AndroidViewModel(applic
     // Update MutableLiveData with list from above
     private val _latestMessages: MutableLiveData<List<ChatMessage>> =
         MutableLiveData()
+    private val _fetching: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val latestMessages: LiveData<List<ChatMessage>> get() = _latestMessages
+    val fetching: LiveData<Boolean> get() = _fetching
 
     fun getLatestMessages() {
+        _fetching.value = true
+
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
         val latestMessageRef = FirebaseDatabase.getInstance()
             .getReference("/latest-messages/${currentUserId}")
@@ -40,6 +44,8 @@ class LatestMessagesViewModel(application: Application): AndroidViewModel(applic
                     latestMessagesMap[snapshot.key!!] = chatMessage
                     _latestMessages.value = latestMessagesMap.values.toList()
                 }
+
+                _fetching.value = false
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {

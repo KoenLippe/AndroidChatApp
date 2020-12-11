@@ -31,12 +31,6 @@ class NewMessageFragment : Fragment() {
     private val users = arrayListOf<User>()
     private val usersAdapter = NewChatAdapter(users, ::onNewChatClick)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        usersViewModel.getUsers()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,7 +44,15 @@ class NewMessageFragment : Fragment() {
 
         initRv()
 
-        // TODO show spinner when loading -> firebase is really slow sometimes
+        usersViewModel.getUsers()
+
+        usersViewModel.fetching.observe(viewLifecycleOwner, Observer {
+            if(it) {
+                pbNewMessage.visibility = View.VISIBLE
+            } else {
+                pbNewMessage.visibility = View.INVISIBLE
+            }
+        })
 
         usersViewModel.users.observe(viewLifecycleOwner, Observer {
             val uid = FirebaseAuth.getInstance().uid
@@ -60,7 +62,6 @@ class NewMessageFragment : Fragment() {
             it.forEach { user -> if(user?.uid != uid) users.add(user!!) }
             usersAdapter.notifyDataSetChanged()
         })
-
     }
 
     private fun initRv() {
