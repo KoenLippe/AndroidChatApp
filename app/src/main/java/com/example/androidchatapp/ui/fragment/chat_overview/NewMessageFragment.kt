@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidchatapp.ChatActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_new_message.*
 
 class NewMessageFragment : Fragment() {
@@ -50,11 +51,13 @@ class NewMessageFragment : Fragment() {
         initRv()
 
         // TODO show spinner when loading -> firebase is really slow sometimes
-        // TODO: Filter out yourself
 
         usersViewModel.users.observe(viewLifecycleOwner, Observer {
+            val uid = FirebaseAuth.getInstance().uid
             users.clear()
-            it.forEach { user -> users.add(user!!) }
+
+            //Add all users and filter out yourself
+            it.forEach { user -> if(user?.uid != uid) users.add(user!!) }
             usersAdapter.notifyDataSetChanged()
         })
 
