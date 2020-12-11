@@ -65,10 +65,9 @@ class ChatAdapter (
                 return ReceivedMessageHolder(view)
             }
             else -> {
-                //TODO Replace this
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_chat_received, parent, false)
-                return ReceivedMessageHolder(view)
+                    .inflate(R.layout.item_chat_sent, parent, false)
+                return SentMessageHolder(view)
             }
         }
     }

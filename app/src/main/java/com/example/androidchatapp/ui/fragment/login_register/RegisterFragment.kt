@@ -48,8 +48,6 @@ class RegisterFragment: Fragment() {
         Log.d(TAG, username)
         Log.d(TAG, password)
 
-        // TODO add hashing?
-
         if(username.isBlank() or password.isBlank() or passwordConfirm.isBlank()) {
             Toast.makeText(context, getString(R.string.register_error_fill_all_fields),
                 Toast.LENGTH_LONG).show()
