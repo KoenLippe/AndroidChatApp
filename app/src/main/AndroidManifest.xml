@@ -15,7 +15,7 @@
         <activity
             android:name=".ChatActivity"
             android:label="@string/title_activity_chat"
-            android:theme="@style/Theme.AndroidChatApp.NoActionBar"></activity>
+            android:theme="@style/Theme.AndroidChatApp.NoActionBar" />
         <activity
             android:name=".ChatOverviewActivity"
             android:label="@string/title_activity_chat_overview"
@@ -23,7 +23,8 @@
         <activity
             android:name=".LoginRegisterActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AndroidChatApp.NoActionBar">
+            android:theme="@style/Theme.AndroidChatApp.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
