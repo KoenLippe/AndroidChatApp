@@ -72,7 +72,7 @@ class RegisterFragment: Fragment() {
 
                 val user: FirebaseUser? = firebaseAuth.currentUser
                 Log.d(TAG, "Registered user with email: ${user?.email}")
-                Toast.makeText(context, "Registration successful ${user?.uid}",
+                Toast.makeText(context, "Registration successful!",
                     Toast.LENGTH_LONG).show()
 
                 saveUserToFirebaseDatabase(User(user?.uid, username))

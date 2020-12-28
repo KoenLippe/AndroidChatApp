@@ -61,8 +61,6 @@ class LoginFragment: Fragment() {
                 if(!task.isSuccessful) return@addOnCompleteListener
 
                 Log.d(TAG, "Login successful ${task.result?.user?.uid}")
-                Toast.makeText(context, "Login successful ${task.result?.user?.uid}",
-                    Toast.LENGTH_LONG).show()
 
                 (activity as LoginRegisterActivity).startChatOverviewActivity()
 

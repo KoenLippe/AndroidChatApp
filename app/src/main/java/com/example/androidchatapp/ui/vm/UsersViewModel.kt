@@ -23,7 +23,6 @@ class UsersViewModel(application: Application): AndroidViewModel(application) {
 
     val users: LiveData<List<User?>> get() = _users
     val fetching: LiveData<Boolean> get() = _fetching
-    //TODO add spinner when loading
 
     fun getUsers() {
         // Fetching users from database

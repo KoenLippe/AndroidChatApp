@@ -77,5 +77,7 @@ class LatestMessagesViewModel(application: Application): AndroidViewModel(applic
                 return
             }
         })
+
+        _fetching.value = false
     }
 }
