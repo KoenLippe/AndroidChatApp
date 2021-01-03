@@ -17,6 +17,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.item_chat_list_item.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.lang.Long.parseLong
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,19 +48,21 @@ class LatestChatsAdapter(
             // Get user info
             val chatPartnerId = if(chat.fromId == FirebaseAuth.getInstance().uid)
                 chat.toId else chat.fromId
-
             val ref = FirebaseDatabase.getInstance().getReference("/users/${chatPartnerId}")
-            ref.addListenerForSingleValueEvent(object: ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    user = snapshot.getValue(User::class.java)!!
-                    itemView.txtName.text = user.username
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    // No action required
-                    return
-                }
-            })
+            GlobalScope.launch(Dispatchers.IO) {
+                ref.addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        user = snapshot.getValue(User::class.java)!!
+                        itemView.txtName.text = user.username
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        // No action required
+                        return
+                    }
+                })
+            }
         }
     }
 

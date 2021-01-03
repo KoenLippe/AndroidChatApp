@@ -11,6 +11,9 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class LatestMessagesViewModel(application: Application): AndroidViewModel(application) {
 
@@ -35,48 +38,51 @@ class LatestMessagesViewModel(application: Application): AndroidViewModel(applic
         val latestMessageRef = FirebaseDatabase.getInstance()
             .getReference("/latest-messages/${currentUserId}")
 
-        latestMessageRef.addChildEventListener(object: ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val chatMessage = snapshot.getValue(ChatMessage::class.java)
-                Log.d(TAG, "Message: " + chatMessage.toString())
+        GlobalScope.launch(Dispatchers.IO) {
+            latestMessageRef.addChildEventListener(object: ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    val chatMessage = snapshot.getValue(ChatMessage::class.java)
+                    Log.d(TAG, "Message: " + chatMessage.toString())
 
-                if(chatMessage != null) {
-                    latestMessagesMap[snapshot.key!!] = chatMessage
-                    _latestMessages.value = latestMessagesMap.values.toList()
+                    if(chatMessage != null) {
+                        latestMessagesMap[snapshot.key!!] = chatMessage
+                        _latestMessages.value = latestMessagesMap.values.toList()
+                    }
+
+                    _fetching.value = false
                 }
 
-                _fetching.value = false
-            }
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                    val chatMessage = snapshot.getValue(ChatMessage::class.java)
 
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val chatMessage = snapshot.getValue(ChatMessage::class.java)
-
-                if(chatMessage != null) {
-                    latestMessagesMap[snapshot.key!!] = chatMessage
-                    _latestMessages.value = latestMessagesMap.values.toList()
+                    if(chatMessage != null) {
+                        latestMessagesMap[snapshot.key!!] = chatMessage
+                        _latestMessages.value = latestMessagesMap.values.toList()
+                    }
+                    return
                 }
-                return
-            }
 
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                val chatMessage = snapshot.getValue(ChatMessage::class.java)
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                    val chatMessage = snapshot.getValue(ChatMessage::class.java)
 
-                if(chatMessage != null) {
-                    latestMessagesMap[snapshot.key!!] = chatMessage
-                    _latestMessages.value = latestMessagesMap.values.toList()
+                    if(chatMessage != null) {
+                        latestMessagesMap[snapshot.key!!] = chatMessage
+                        _latestMessages.value = latestMessagesMap.values.toList()
+                    }
                 }
-            }
 
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                // No action required - needs to be implemented
-                return
-            }
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                    // No action required
+                    return
+                }
 
-            override fun onCancelled(error: DatabaseError) {
-                // No action required - needs to be implemented
-                return
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    // No action required
+                    return
+                }
+            })
+        }
+
 
         _fetching.value = false
     }

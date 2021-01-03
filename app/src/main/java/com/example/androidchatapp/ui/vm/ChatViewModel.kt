@@ -14,6 +14,9 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ChatViewModel(application: Application): AndroidViewModel(application) {
 
@@ -35,42 +38,44 @@ class ChatViewModel(application: Application): AndroidViewModel(application) {
         val ref = FirebaseDatabase.getInstance()
             .getReference("/user-messages/${currentUserId}/${chatPartner.uid}")
 
-        ref.addChildEventListener(object: ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val chatMessage = snapshot.getValue(ChatMessage::class.java)
+        GlobalScope.launch(Dispatchers.IO) {
+            ref.addChildEventListener(object: ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    val chatMessage = snapshot.getValue(ChatMessage::class.java)
 
-                if(chatMessage != null) {
-                    Log.i(TAG, chatMessage.content)
-                    if(chatMessage.fromId == currentUserId || chatMessage.toId == currentUserId) {
-                        messagesList.add(chatMessage)
-                       _messages.value = messagesList
+                    if(chatMessage != null) {
+                        Log.i(TAG, chatMessage.content)
+                        if(chatMessage.fromId == currentUserId || chatMessage.toId == currentUserId) {
+                            messagesList.add(chatMessage)
+                            _messages.value = messagesList
+                        }
                     }
                 }
-            }
 
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                // No action required - needs to be implemented
-                return
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                val chatMessage = snapshot.getValue(ChatMessage::class.java)
-
-                if(chatMessage != null) {
-                    messagesList.remove(chatMessage)
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                    // No action required - needs to be implemented
+                    return
                 }
-            }
 
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                // No action required - needs to be implemented
-                return
-            }
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                    val chatMessage = snapshot.getValue(ChatMessage::class.java)
 
-            override fun onCancelled(error: DatabaseError) {
-                // No action required - needs to be implemented
-                return
-            }
-        })
+                    if(chatMessage != null) {
+                        messagesList.remove(chatMessage)
+                    }
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                    // No action required - needs to be implemented
+                    return
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // No action required - needs to be implemented
+                    return
+                }
+            })
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -92,17 +97,19 @@ class ChatViewModel(application: Application): AndroidViewModel(application) {
             to.uid!!,
             System.currentTimeMillis()/1000)
 
-        ownRef.setValue(chatMessage).addOnCompleteListener {
-            Log.i(TAG, "Chat Message Send - ownReference")
-        }
-        toRef.setValue(chatMessage).addOnCompleteListener {
-            Log.i(TAG, "Chat Message Send - toReference")
-        }
-        ownLatestMessageRef.setValue(chatMessage).addOnCompleteListener {
-            Log.i(TAG, "Latest message updated - ownReference")
-        }
-        toLatestMessageRef.setValue(chatMessage).addOnCompleteListener {
-            Log.i(TAG, "Latest message updated - toReference")
+        GlobalScope.launch(Dispatchers.IO) {
+            ownRef.setValue(chatMessage).addOnCompleteListener {
+                Log.i(TAG, "Chat Message Send - ownReference")
+            }
+            toRef.setValue(chatMessage).addOnCompleteListener {
+                Log.i(TAG, "Chat Message Send - toReference")
+            }
+            ownLatestMessageRef.setValue(chatMessage).addOnCompleteListener {
+                Log.i(TAG, "Latest message updated - ownReference")
+            }
+            toLatestMessageRef.setValue(chatMessage).addOnCompleteListener {
+                Log.i(TAG, "Latest message updated - toReference")
+            }
         }
     }
 }

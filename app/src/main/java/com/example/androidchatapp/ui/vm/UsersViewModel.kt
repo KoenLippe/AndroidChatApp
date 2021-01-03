@@ -10,6 +10,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class UsersViewModel(application: Application): AndroidViewModel(application) {
 
@@ -29,19 +32,21 @@ class UsersViewModel(application: Application): AndroidViewModel(application) {
         _fetching.value = true
         val ref = FirebaseDatabase.getInstance().getReference("/users")
 
-        ref.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val convertedUsers: List<User?> = snapshot.children.map {
-                    it!!.getValue(User::class.java)
+        GlobalScope.launch(Dispatchers.IO) {
+            ref.addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val convertedUsers: List<User?> = snapshot.children.map {
+                        it!!.getValue(User::class.java)
+                    }
+
+                    _users.value = convertedUsers
+                    _fetching.value = false
                 }
 
-                _users.value = convertedUsers
-                _fetching.value = false
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d(TAG, "addListenerForSingleValueEvent Cancelled")
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d(TAG, "addListenerForSingleValueEvent Cancelled")
+                }
+            })
+        }
     }
 }
