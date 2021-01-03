@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidchatapp.R
 import com.example.androidchatapp.model.ChatMessage
 import com.example.androidchatapp.model.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -42,7 +43,10 @@ class LatestChatsAdapter(
 
             //TODO Extract to own layer?
             // Get user info
-            val ref = FirebaseDatabase.getInstance().getReference("/users/${chat.fromId}")
+            val chatPartnerId = if(chat.fromId == FirebaseAuth.getInstance().uid)
+                chat.toId else chat.fromId
+
+            val ref = FirebaseDatabase.getInstance().getReference("/users/${chatPartnerId}")
             ref.addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     user = snapshot.getValue(User::class.java)!!
