@@ -16,7 +16,7 @@ import com.example.androidchatapp.R
 import com.example.androidchatapp.model.ChatMessage
 import com.example.androidchatapp.model.User
 import com.example.androidchatapp.ui.ChatAdapter
-import com.example.androidchatapp.ui.vm.ChatViewModel
+import com.example.androidchatapp.vm.ChatViewModel
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_chat.*
 

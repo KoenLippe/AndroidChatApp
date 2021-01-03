@@ -1,4 +1,4 @@
-package com.example.androidchatapp.ui.vm
+package com.example.androidchatapp.vm
 
 import android.app.Application
 import android.os.Build

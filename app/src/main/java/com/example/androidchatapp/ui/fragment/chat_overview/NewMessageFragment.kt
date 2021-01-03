@@ -1,8 +1,6 @@
 package com.example.androidchatapp.ui.fragment.chat_overview
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +9,10 @@ import androidx.fragment.app.viewModels
 import com.example.androidchatapp.R
 import com.example.androidchatapp.model.User
 import com.example.androidchatapp.ui.adapter.NewChatAdapter
-import com.example.androidchatapp.ui.vm.UsersViewModel
+import com.example.androidchatapp.vm.UsersViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidchatapp.ChatActivity
 import com.example.androidchatapp.ChatOverviewActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_new_message.*

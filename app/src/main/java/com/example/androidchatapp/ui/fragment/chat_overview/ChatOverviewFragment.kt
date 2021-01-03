@@ -3,7 +3,6 @@ package com.example.androidchatapp.ui.fragment.chat_overview
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidchatapp.R
 import com.example.androidchatapp.model.ChatMessage
 import com.example.androidchatapp.ui.adapter.LatestChatsAdapter
-import com.example.androidchatapp.ui.vm.LatestMessagesViewModel
+import com.example.androidchatapp.vm.LatestMessagesViewModel
 import kotlinx.android.synthetic.main.fragment_chat_overview.*
 import androidx.lifecycle.Observer
 import com.example.androidchatapp.ChatOverviewActivity

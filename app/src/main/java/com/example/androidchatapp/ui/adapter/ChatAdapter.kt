@@ -1,4 +1,4 @@
-package com.example.androidchatapp.ui
+package com.example.androidchatapp.ui.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
