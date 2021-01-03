@@ -53,6 +53,7 @@ class ChatViewModel(application: Application): AndroidViewModel(application) {
                 }
 
                 override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                    // TODO: Implement
                     // No action required - needs to be implemented
                     return
                 }
@@ -66,12 +67,12 @@ class ChatViewModel(application: Application): AndroidViewModel(application) {
                 }
 
                 override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                    // No action required - needs to be implemented
+                    // No action required
                     return
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // No action required - needs to be implemented
+                    // No action required
                     return
                 }
             })
