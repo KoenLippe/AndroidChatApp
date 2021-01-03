@@ -39,6 +39,7 @@ class ChatOverviewActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onBackPressed() {}
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
