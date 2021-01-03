@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    tools:context=".ChatOverviewActivity">
 
     <ProgressBar
         android:id="@+id/pbLatestMessages"
@@ -17,13 +17,31 @@
         android:indeterminateTint="#1a09d6"
         android:max="100"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/rvChats"
+        app:layout_constraintBottom_toTopOf="@+id/txtNoMessages"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <TextView
+        android:id="@+id/txtNoMessages"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:text="@string/no_chats_yet"
+        android:gravity="center"
+        android:visibility="visible"
+        android:textColor="@color/material_on_surface_emphasis_high_type"
+        android:textSize="16sp"
+        android:lineHeight="@dimen/line_height_no_recent_chats"
+        app:layout_constraintTop_toBottomOf="@+id/pbLatestMessages"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rvChats"
+        tools:targetApi="p" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChats"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

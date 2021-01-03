@@ -31,4 +31,5 @@
     <string name="help_yes">YES</string>
     <string name="title_activity_chat">ChatActivity</string>
     <string name="toolbar_title">ChatApp</string>
+    <string name="no_chats_yet">You have no recent chats, start one by clicking on button in the bottom right!</string>
 </resources>

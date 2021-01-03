@@ -43,7 +43,6 @@ class ChatOverviewFragment : Fragment() {
         initRv()
 
         latestMessagesViewModel.fetching.observe(viewLifecycleOwner, Observer {
-            Log.i(TAG, it.toString())
             if(it) {
                 pbLatestMessages.visibility = View.VISIBLE
             } else {
@@ -61,6 +60,8 @@ class ChatOverviewFragment : Fragment() {
             // Scroll to top
             rvChats.scrollToPosition(0)
             Log.i(TAG, "Latest messages updated")
+
+            txtNoMessages.visibility = View.INVISIBLE
         })
 
         latestMessagesViewModel.getLatestMessages()
