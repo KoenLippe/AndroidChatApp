@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment: Fragment() {
     companion object {
-        const val TAG = "REGISTER"
+        const val TAG = "FRAGMENT_REGISTER"
         const val MINIMUM_PASSWORD_LENGTH = 6
     }
 

@@ -40,6 +40,7 @@ class LatestChatsAdapter(
             itemView.txtLatestMessage.text = chat.content
             itemView.txtTimestamp.text = getDateString(chat.timestamp.toString())
 
+            //TODO Extract to own layer?
             // Get user info
             val ref = FirebaseDatabase.getInstance().getReference("/users/${chat.fromId}")
             ref.addListenerForSingleValueEvent(object: ValueEventListener {

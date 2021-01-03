@@ -14,7 +14,7 @@ import com.google.firebase.database.ValueEventListener
 class UsersViewModel(application: Application): AndroidViewModel(application) {
 
     companion object {
-        const val TAG = "USER_VIEW_MODEL"
+        const val TAG = "VM_USER"
     }
 
     //TODO: Add repository?

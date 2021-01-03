@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_chat.*
 class ChatFragment : Fragment() {
 
     companion object {
-        private const val TAG = "CHAT_FRAGMENT"
+        private const val TAG = "FRAGMENT_CHAT"
     }
 
     private val chatViewModel: ChatViewModel by viewModels()

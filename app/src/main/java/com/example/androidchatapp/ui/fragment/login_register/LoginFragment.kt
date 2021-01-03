@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_login.*
 class LoginFragment: Fragment() {
 
     companion object {
-        const val TAG = "LOGIN"
+        const val TAG = "FRAGMENT_LOGIN"
     }
 
     override fun onCreateView(

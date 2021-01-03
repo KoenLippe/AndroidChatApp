@@ -20,7 +20,7 @@ import com.example.androidchatapp.model.User
 class ChatOverviewFragment : Fragment() {
 
     companion object {
-        const val TAG = "ChatOverviewFragment"
+        const val TAG = "FRAGMENT_CHAT_OVERVIEW"
     }
 
     // TODO add text when recycler view is empty
