@@ -22,6 +22,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+const val MESSAGE_TRUNCATE_VALUE = 25
+
 class LatestChatsAdapter(
     private val chats: List<ChatMessage>,
     private val onChatClick: (User) -> Unit
@@ -39,7 +41,7 @@ class LatestChatsAdapter(
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun dataBind(chat: ChatMessage) {
-            itemView.txtLatestMessage.text = chat.content
+            itemView.txtLatestMessage.text = chat.content.take(MESSAGE_TRUNCATE_VALUE)
             itemView.txtTimestamp.text = DateParser.parseTimestamp(chat.timestamp.toString(), true)
 
             // Get user info
