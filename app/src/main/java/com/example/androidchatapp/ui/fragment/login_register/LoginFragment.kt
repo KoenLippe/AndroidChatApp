@@ -12,6 +12,9 @@ import com.example.androidchatapp.LoginRegisterActivity
 import com.example.androidchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class LoginFragment: Fragment() {
@@ -52,19 +55,21 @@ class LoginFragment: Fragment() {
         }
 
         val firebaseAuth = FirebaseAuth.getInstance()
-        firebaseAuth.signInWithEmailAndPassword(username, password)
-            .addOnCompleteListener { task ->
-                if(!task.isSuccessful) return@addOnCompleteListener
+        GlobalScope.launch(Dispatchers.IO) {
+            firebaseAuth.signInWithEmailAndPassword(username, password)
+                .addOnCompleteListener { task ->
+                    if(!task.isSuccessful) return@addOnCompleteListener
 
-                Log.d(TAG, "Login successful ${task.result?.user?.uid}")
+                    Log.d(TAG, "Login successful ${task.result?.user?.uid}")
 
-                (activity as LoginRegisterActivity).startChatOverviewActivity()
+                    (activity as LoginRegisterActivity).startChatOverviewActivity()
 
-            }
-            .addOnFailureListener {error ->
-                Log.d(TAG, "signIn:failure", error.cause)
-                Toast.makeText(context, "Login failed, reason: ${error.message}",
-                    Toast.LENGTH_LONG).show()
-            }
+                }
+                .addOnFailureListener {error ->
+                    Log.d(TAG, "signIn:failure", error.cause)
+                    Toast.makeText(context, "Login failed, reason: ${error.message}",
+                        Toast.LENGTH_LONG).show()
+                }
+        }
     }
 }

@@ -14,6 +14,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_register.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class RegisterFragment: Fragment() {
     companion object {
@@ -66,30 +69,35 @@ class RegisterFragment: Fragment() {
 
         Log.d(TAG, "Attempting signup")
         val firebaseAuth = FirebaseAuth.getInstance()
-        firebaseAuth.createUserWithEmailAndPassword(username, password)
-            .addOnCompleteListener { task ->
-                if(!task.isSuccessful) return@addOnCompleteListener
 
-                val user: FirebaseUser? = firebaseAuth.currentUser
-                Log.d(TAG, "Registered user with email: ${user?.email}")
-                Toast.makeText(context, "Registration successful!",
-                    Toast.LENGTH_LONG).show()
+        GlobalScope.launch(Dispatchers.IO) {
+            firebaseAuth.createUserWithEmailAndPassword(username, password)
+                .addOnCompleteListener { task ->
+                    if(!task.isSuccessful) return@addOnCompleteListener
 
-                saveUserToFirebaseDatabase(User(user?.uid, username))
-                findNavController().navigate(R.id.action_RegisterFragment_to_LoginFragment)
-            }
-            .addOnFailureListener {error ->
-                Log.d(TAG, "createUserWithEmail:failure", error.cause)
-                Toast.makeText(context, "Authentication failed, reason: ${error.message}",
-                    Toast.LENGTH_LONG).show()
-            }
+                    val user: FirebaseUser? = firebaseAuth.currentUser
+                    Log.d(TAG, "Registered user with email: ${user?.email}")
+                    Toast.makeText(context, "Registration successful!",
+                        Toast.LENGTH_LONG).show()
+
+                    saveUserToFirebaseDatabase(User(user?.uid, username))
+                    findNavController().navigate(R.id.action_RegisterFragment_to_LoginFragment)
+                }
+                .addOnFailureListener {error ->
+                    Log.d(TAG, "createUserWithEmail:failure", error.cause)
+                    Toast.makeText(context, "Authentication failed, reason: ${error.message}",
+                        Toast.LENGTH_LONG).show()
+                }
+        }
     }
     
     private fun saveUserToFirebaseDatabase(user: User) {
         val ref = FirebaseDatabase.getInstance().getReference("/users/${user.uid}")
 
-        ref.setValue(user).addOnCompleteListener {
-            Log.d(TAG, "Saved user to firebase database")
+        GlobalScope.launch(Dispatchers.IO) {
+            ref.setValue(user).addOnCompleteListener {
+                Log.d(TAG, "Saved user to firebase database")
+            }
         }
     }
 }
