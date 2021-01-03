@@ -17,8 +17,22 @@
         android:max="100"
         android:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/txtNoUsers"
+        android:layout_gravity="center"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:text="@string/no_other_users"
+        android:gravity="center"
+        android:visibility="visible"
+        android:textColor="@color/material_on_surface_emphasis_high_type"
+        android:textSize="16sp"
+        android:lineHeight="@dimen/line_height_no_recent_chats"
+        tools:targetApi="p" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUsers"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
 </FrameLayout>

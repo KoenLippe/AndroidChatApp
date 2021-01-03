@@ -32,4 +32,5 @@
     <string name="title_activity_chat">ChatActivity</string>
     <string name="toolbar_title">ChatApp</string>
     <string name="no_chats_yet">You have no recent chats, start one by clicking on button in the bottom right!</string>
+    <string name="no_other_users">Currently there are no other users you can chat with. How about you invite a friend?</string>
 </resources>

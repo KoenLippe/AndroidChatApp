@@ -1,6 +1,7 @@
 package com.example.androidchatapp.ui.fragment.chat_overview
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -54,10 +55,15 @@ class NewMessageFragment : Fragment() {
         usersViewModel.users.observe(viewLifecycleOwner, Observer {
             val uid = FirebaseAuth.getInstance().uid
             users.clear()
+            
+            // Filter out yourself
+            val filteredUsersList = it.filter { user -> user?.uid != uid }
 
-            //Add all users and filter out yourself
-            it.forEach { user -> if(user?.uid != uid) users.add(user!!) }
-            usersAdapter.notifyDataSetChanged()
+            if(filteredUsersList.isNotEmpty()) {
+                filteredUsersList.forEach { user -> users.add(user!!) }
+                usersAdapter.notifyDataSetChanged()
+                txtNoUsers.visibility = View.INVISIBLE
+            }
         })
     }
 
