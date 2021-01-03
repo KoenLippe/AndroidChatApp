@@ -42,7 +42,6 @@ class LatestChatsAdapter(
             itemView.txtLatestMessage.text = chat.content
             itemView.txtTimestamp.text = DateParser.parseTimestamp(chat.timestamp.toString(), true)
 
-            //TODO Extract to own layer?
             // Get user info
             val chatPartnerId = if(chat.fromId == FirebaseAuth.getInstance().uid)
                 chat.toId else chat.fromId

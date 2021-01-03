@@ -53,8 +53,7 @@ class ChatViewModel(application: Application): AndroidViewModel(application) {
                 }
 
                 override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                    // TODO: Implement
-                    // No action required - needs to be implemented
+                    // No action required - Text edit is not possible in the current state
                     return
                 }
 

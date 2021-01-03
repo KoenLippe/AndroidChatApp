@@ -20,7 +20,6 @@ class UsersViewModel(application: Application): AndroidViewModel(application) {
         const val TAG = "VM_USER"
     }
 
-    //TODO: Add repository?
     private val _users: MutableLiveData<List<User?>> = MutableLiveData()
     private val _fetching: MutableLiveData<Boolean> = MutableLiveData(false)
 

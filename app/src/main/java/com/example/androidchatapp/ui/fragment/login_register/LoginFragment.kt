@@ -44,10 +44,6 @@ class LoginFragment: Fragment() {
         // TODO: Possible addition: add loader
         val username = txtUsernameLogin.editText?.text.toString()
         val password = txtPasswordLogin.editText?.text.toString()
-        Log.d(TAG, username)
-        Log.d(TAG, password)
-
-        // TODO add hashing?
 
         if(username.isBlank() or password.isBlank()) {
             Toast.makeText(context, "Please fill in all fields ",

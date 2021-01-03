@@ -84,9 +84,6 @@
                 android:text="@string/create_new_account"
                 android:gravity="center"/>
 
-
-            <!--        TODO: Move content up when keyboard opens-->
-
         </LinearLayout>
 
     </LinearLayout>
