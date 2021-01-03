@@ -55,7 +55,7 @@ class NewMessageFragment : Fragment() {
         usersViewModel.users.observe(viewLifecycleOwner, Observer {
             val uid = FirebaseAuth.getInstance().uid
             users.clear()
-            
+
             // Filter out yourself
             val filteredUsersList = it.filter { user -> user?.uid != uid }
 

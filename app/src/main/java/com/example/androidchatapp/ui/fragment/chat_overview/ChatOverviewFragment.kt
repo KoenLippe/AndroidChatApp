@@ -22,8 +22,6 @@ class ChatOverviewFragment : Fragment() {
         const val TAG = "FRAGMENT_CHAT_OVERVIEW"
     }
 
-    // TODO add text when recycler view is empty
-
     private val latestMessagesViewModel: LatestMessagesViewModel by viewModels()
 
     private val latestChats = arrayListOf<ChatMessage>()

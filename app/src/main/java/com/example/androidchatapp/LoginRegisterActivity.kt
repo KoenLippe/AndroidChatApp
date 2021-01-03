@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ class LoginRegisterActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_login_register)
         setSupportActionBar(findViewById(R.id.toolbar))
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
