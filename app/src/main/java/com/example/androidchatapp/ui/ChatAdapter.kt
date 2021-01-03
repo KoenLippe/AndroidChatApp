@@ -1,5 +1,6 @@
 package com.example.androidchatapp.ui
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,9 @@ import com.example.androidchatapp.databinding.ItemChatReceivedBinding
 import com.example.androidchatapp.databinding.ItemChatSentBinding
 import com.example.androidchatapp.model.ChatMessage
 import com.google.firebase.auth.FirebaseAuth
+import java.lang.Long
+import java.text.SimpleDateFormat
+import java.util.*
 
 const val VIEW_TYPE_MESSAGE_SENT = 1
 const val VIEW_TYPE_MESSAGE_RECEIVED = 2
@@ -23,6 +27,7 @@ class ChatAdapter (
 
         fun dataBind(message: ChatMessage) {
             binding.txtContent.text = message.content
+            binding.txtTimestampSent.text = parseChatTimestamp(message.timestamp.toString())
         }
     }
 
@@ -32,6 +37,7 @@ class ChatAdapter (
 
         fun dataBind(message: ChatMessage) {
             binding.txtContent.text = message.content
+            binding.txtTimestampReceived.text = parseChatTimestamp(message.timestamp.toString())
         }
     }
 
@@ -82,6 +88,18 @@ class ChatAdapter (
             VIEW_TYPE_MESSAGE_RECEIVED -> {
                 (holder as ReceivedMessageHolder).dataBind(message)
             }
+        }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun parseChatTimestamp(s: String): String? {
+        try {
+            val sdf = SimpleDateFormat("HH:mm")
+            val netDate = Date(Long.parseLong(s) * 1000)
+
+            return sdf.format(netDate)
+        } catch (e: Exception) {
+            return e.toString()
         }
     }
 }
