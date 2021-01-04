@@ -49,5 +49,6 @@ class LoginRegisterActivity : AppCompatActivity() {
     fun startChatOverviewActivity() {
         val intent = Intent(this, ChatOverviewActivity::class.java)
         startActivity(intent)
+        finish()
     }
 }
