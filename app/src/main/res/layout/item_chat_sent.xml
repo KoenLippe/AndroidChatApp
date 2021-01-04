@@ -4,12 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="end">
+    android:layout_gravity="end"
+    android:paddingHorizontal="10dp">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginVertical="10dp"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
@@ -37,7 +38,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginEnd="10dp">
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/txtContent"
@@ -48,10 +50,11 @@
 
             <TextView
                 android:id="@+id/txtTimestampSent"
+                android:minWidth="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:textColor="#AAAFB4"/>
+                android:textColor="@color/timestamp_grey"/>
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
