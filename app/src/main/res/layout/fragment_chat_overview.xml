@@ -29,7 +29,7 @@
         android:layout_height="match_parent"
         android:text="@string/no_chats_yet"
         android:gravity="center"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:textColor="@color/material_on_surface_emphasis_high_type"
         android:textSize="16sp"
         android:lineHeight="@dimen/line_height_no_recent_chats"

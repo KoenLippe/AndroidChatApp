@@ -49,6 +49,11 @@ class ChatOverviewFragment : Fragment() {
         })
 
         latestMessagesViewModel.latestMessages.observe(viewLifecycleOwner, Observer { it ->
+            if(it.isEmpty()) {
+                txtNoMessages.visibility = View.VISIBLE
+                return@Observer
+            }
+
             latestChats.clear()
             latestChats.addAll(it)
             latestChats.sortBy { it.timestamp }

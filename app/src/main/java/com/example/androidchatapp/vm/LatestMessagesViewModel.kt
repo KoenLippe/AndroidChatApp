@@ -14,6 +14,8 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.concurrent.schedule
 
 class LatestMessagesViewModel(application: Application): AndroidViewModel(application) {
 
@@ -81,8 +83,16 @@ class LatestMessagesViewModel(application: Application): AndroidViewModel(applic
                     return
                 }
             })
-        }
 
+            // This is needed to trigger the observer with an empty list when chats are present.
+            // Based on the empty list we can show an message
+            Timer("waitForResponseElseTriggerText", false).schedule(1000) {
+                if(_latestMessages.value === null) {
+                _latestMessages.postValue(latestMessagesMap.values.toList())
+                }
+            }
+
+        }
 
         _fetching.value = false
     }
