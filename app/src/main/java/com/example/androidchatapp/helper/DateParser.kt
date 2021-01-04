@@ -1,11 +1,13 @@
 package com.example.androidchatapp.helper
 
+import android.annotation.SuppressLint
 import java.lang.Long
 import java.text.SimpleDateFormat
 import java.util.*
 
 class DateParser {
     companion object {
+        @SuppressLint("SimpleDateFormat")
         fun parseTimestamp(timestamp: String, convertToDay: Boolean): String {
             try {
                 val sdf: SimpleDateFormat

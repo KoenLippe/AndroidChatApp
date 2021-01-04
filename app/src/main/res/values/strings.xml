@@ -4,11 +4,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
     <string name="title_login">Login</string>
@@ -18,7 +14,6 @@
     <string name="create_new_account">Create new account</string>
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="menu_sign_out">Sign Out</string>
-    <string name="menu_new_chat">New Chat</string>
     <string name="title_activity_chat_overview">ChatOverviewActivity</string>
     <string name="label_chat_overview">ChatOverview</string>
     <string name="register_error_fill_all_fields">Please fill in all fields.</string>
@@ -34,4 +29,7 @@
     <string name="no_chats_yet">You have no recent chats, start one by clicking on button in the bottom right!</string>
     <string name="no_other_users">Currently there are no other users you can chat with. How about you invite a friend?</string>
     <string name="button_send">Send</string>
+    <string name="fab">FAB</string>
+    <string name="back_icon">BACK_ICON</string>
+    <string name="avatar">AVATAR</string>
 </resources>

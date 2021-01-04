@@ -1,6 +1,5 @@
 package com.example.androidchatapp.ui.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater

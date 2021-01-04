@@ -34,7 +34,7 @@ class ChatFragment : Fragment() {
     private val chatMessages = arrayListOf<ChatMessage>()
     private val chatMessagesAdapter = ChatAdapter(chatMessages)
 
-    private lateinit var chatPartner: User;
+    private lateinit var chatPartner: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

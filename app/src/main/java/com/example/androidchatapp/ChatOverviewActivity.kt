@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.androidchatapp.model.User
 import com.example.androidchatapp.ui.dialog.LogoutDialog
-import com.example.androidchatapp.ui.fragment.chat_overview.NewMessageFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_chat_overview.*
 import kotlinx.android.synthetic.main.content_chat_overview.*
 
@@ -26,7 +25,7 @@ class ChatOverviewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat_overview)
         setSupportActionBar(findViewById(R.id.toolbarChatOverview))
 
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { _ ->
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             nav_host_fragment.findNavController()
                 .navigate(R.id.action_ChatOverviewFragment_to_NewMessageFragment)
         }

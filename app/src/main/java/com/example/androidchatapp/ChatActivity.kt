@@ -3,7 +3,6 @@ package com.example.androidchatapp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidchatapp.model.User
-import com.example.androidchatapp.ui.fragment.chat_overview.NewMessageFragment
 
 class ChatActivity : AppCompatActivity() {
 
@@ -14,7 +13,7 @@ class ChatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        chatPartner = intent.getParcelableExtra<User>(ChatOverviewActivity.KEY_USER)!!
+        chatPartner = intent.getParcelableExtra(ChatOverviewActivity.KEY_USER)!!
         supportActionBar?.title = chatPartner.username
     }
 }
