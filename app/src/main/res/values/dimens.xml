@@ -1,4 +1,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="line_height_no_recent_chats">26sp</dimen>
+    <dimen name="margin_chat_message">40dp</dimen>
 </resources>
